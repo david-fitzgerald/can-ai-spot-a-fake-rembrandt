@@ -1,4 +1,4 @@
-# authentication-scanner
+# can-ai-spot-a-fake-rembrandt
 
 Frozen DINOv2 flags wrong-artist paintings (p=2e-11) but can't reliably tell Rembrandt from his circle (63.7% ceiling)
 
