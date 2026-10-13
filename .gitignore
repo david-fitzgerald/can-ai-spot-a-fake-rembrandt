@@ -13,3 +13,14 @@ cache/
 
 # OS
 .DS_Store
+
+# Local harness docs (never published)
+AGENTS.md
+CLAUDE.md
+STATUS.md
+NOTES.md
+TASKS.md
+LESSONS.md
+graduation-tracking.md
+plans/
+docs/graduation-tracking.md

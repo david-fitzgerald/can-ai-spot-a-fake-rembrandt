@@ -56,7 +56,6 @@ The work ran from 26 February to 9 March 2026 (about 12 days), in phases:
 | [docs/adjacent-angles.md](docs/adjacent-angles.md) | Assessment of 10 candidate extensions |
 | [docs/research.md](docs/research.md) | Market opportunity research |
 | [docs/execution.md](docs/execution.md) | Competitor deep-dive, pricing benchmarks, risk analysis |
-| [docs/graduation-tracking.md](docs/graduation-tracking.md) | Gate documentation |
 | [SPEC.md](SPEC.md) | Retroactive build contract |
 | [prototype.ipynb](prototype.ipynb) | Phase 1 prototype notebook |
 
