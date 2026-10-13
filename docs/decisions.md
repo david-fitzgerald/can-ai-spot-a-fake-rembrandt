@@ -1,7 +1,7 @@
 ---
-version: 0.1.0
+version: 0.1.1
 created: 2026-02-26
-updated: 2026-03-09
+updated: 2026-10-13
 ---
 
 # Authentication — Decisions Log
@@ -44,3 +44,4 @@ Append-only record of key technical decisions and findings.
 | 2026-03-09 | EXP D (curriculum): 59.0% ± 8.1% | Worse than frozen 63.7%. High variance (48.6%–70.0%). Transfer learning adds no value. |
 | 2026-03-09 | EXP A skipped | Transfer embeddings lost when first VM crashed. B/C/D all failed — running A wouldn't change conclusion. |
 | 2026-03-09 | **Tier 3 dead** | All LoRA variants (B: 60.9%, C: crashed, D: 59.0%) underperform frozen 63.7%. Ceiling confirmed. |
+| 2026-10-13 | Correction: hard-negative mining is ROBUST | Top-25% hardest circle subset (37 circle vs 562 autograph): 80.7% bal acc, perm p=0.005, per `cache/results_hard_negatives.json`. Supersedes the 2026-03-08 entry (55.1%, p=0.228). |

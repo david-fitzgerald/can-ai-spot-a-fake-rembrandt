@@ -1,19 +1,14 @@
----
-version: 0.1.0
-created: 2026-03-09
----
-
 # authentication-scanner
 
-Frozen DINOv2 flags paintings by the wrong artist (p=2e-11) but can't tell Rembrandt from his circle (63.7% ceiling)
+Frozen DINOv2 flags wrong-artist paintings (p=2e-11) but can't reliably tell Rembrandt from his circle (63.7% ceiling)
 
 > **Status:** complete, March 2026. No further experiments planned. Reusable: the open-collection fetch pipeline, entropy-weighted tile aggregation, the probe harness and the decisions log.
 
 | Task | Result | Verdict |
 |------|--------|---------|
 | Autograph vs pupil/other Dutch | p=2e-11, p=3e-10 | Strong: reliably detects different artist |
-| Autograph vs circle | p=0.80 (unsupervised), 63.7% (supervised) | Weak: can't separate master from skilled imitator |
-| Hard negatives (top 25% hardest circle) | 55.1% balanced accuracy, p=0.228 | Dead: no edge on commercially relevant cases |
+| Autograph vs circle | p=0.80 (unsupervised), 63.7% (supervised) | Weak: can't reliably separate master from skilled imitator |
+| Hard negatives (top 25% hardest circle) | 80.7% balanced accuracy, p=0.005 | Holds on the closest calls, but only 37 circle vs 562 autograph |
 
 ## The question
 
@@ -21,9 +16,11 @@ Can frozen DINOv2 embeddings screen open museum collections and flag misattribut
 
 ## What we found
 
-DINOv2 frozen embeddings can detect "wrong artist" misattributions (p=2e-11) but cannot distinguish master from skilled imitator, the commercially valuable question. After an exhaustive 3-tier search the ceiling is 63.7% balanced accuracy (entropy-weighted ViT-B/14 tiles with an SVM RBF probe).
+DINOv2 frozen embeddings can detect "wrong artist" misattributions (p=2e-11) but cannot reliably distinguish master from skilled imitator, the commercially valuable question. After an exhaustive 3-tier search the ceiling is 63.7% balanced accuracy (entropy-weighted ViT-B/14 tiles with an SVM RBF probe).
 
-The unsupervised p-values in the table come from the 108-painting Rijksmuseum and Met set (v1, ViT-B/14, Mann-Whitney). Supervised accuracies are 10-fold stratified CV on the 711 autograph and circle paintings, with balanced class weights. At 1,311 paintings the unsupervised circle difference does reach significance (p≈0.000) but no supervised probe gets past 63.7%.
+The unsupervised p-values in the table come from the 108-painting Rijksmuseum and Met set (v1, ViT-B/14, Mann-Whitney). Supervised accuracies are 10-fold stratified CV on the 711 autograph and circle paintings, with balanced class weights. At 1,311 paintings the unsupervised circle difference does reach significance (p≈0.000) but no supervised probe gets past 63.7% on the full set.
+
+The signal holds on the hardest cases. Keeping only the 37 circle paintings closest to an autograph in embedding space (top 25% by cosine similarity), the probe scores 80.7% balanced accuracy against all 562 autographs (p=0.005, 200 permutations). The caveat is size: 37 circle paintings against 562 autographs. Circle recall also rises as the easy negatives are removed (58.4% on all 149 circle paintings, 78.4% on the hardest 37).
 
 ### Exhaustive search: nothing left to try with frozen embeddings
 
@@ -37,7 +34,7 @@ Every configuration, with its statistics, is in [docs/scan-results.md](docs/scan
 
 ## How
 
-`scan.py` is a CLI pipeline that fetches paintings from 6 museum APIs + Wikidata SPARQL, computes DINOv2 vision embeddings and runs unsupervised and supervised classification probes. It has 78 tests, runs on CUDA or MPS and comes with GCE T4 deployment scripts. Each stage caches its output (metadata, then images, then embeddings) so re-runs skip finished work.
+`scan.py` is a CLI pipeline that fetches paintings from 5 museum APIs (Rijksmuseum, Met, NGA, CMA, AIC) plus Wikidata SPARQL, computes DINOv2 vision embeddings and runs unsupervised and supervised classification probes. It has 78 tests, runs on CUDA or MPS and comes with GCE T4 deployment scripts. Each stage caches its output (metadata, then images, then embeddings) so re-runs skip finished work.
 
 The work ran from 26 February to 9 March 2026 (about 12 days), in phases:
 
@@ -50,7 +47,7 @@ The work ran from 26 February to 9 March 2026 (about 12 days), in phases:
 
 | File | What |
 |------|------|
-| [docs/decisions.md](docs/decisions.md) | 33-entry chronological decisions log |
+| [docs/decisions.md](docs/decisions.md) | 35-entry chronological decisions log |
 | [docs/scan-results.md](docs/scan-results.md) | Full experimental results with statistics |
 | [docs/prototype-results.md](docs/prototype-results.md) | Prototype on the Rijksmuseum Rembrandt corpus |
 | [docs/adjacent-angles.md](docs/adjacent-angles.md) | Assessment of 10 candidate extensions |
@@ -106,7 +103,7 @@ Training a custom model would take months of work, significant GPU compute and t
 
 ## Open questions and reusable parts
 
-Technical exploration is exhausted: frozen vision embeddings can't separate master from imitator at commercially useful accuracy. The research, the pipeline and the 33-entry decisions log still have reference value for future vision projects.
+Technical exploration is exhausted: frozen vision embeddings can't separate master from imitator at commercially useful accuracy. The research, the pipeline and the 35-entry decisions log still have reference value for future vision projects.
 
 Reusable:
 
