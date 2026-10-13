@@ -9,6 +9,10 @@ created: 2026-03-09
 
 DINOv2 frozen embeddings can detect "wrong artist" misattributions (p=2e-11) but cannot distinguish master from skilled imitator — the commercially valuable question. Ceiling confirmed at 63.7% balanced accuracy after exhaustive 3-tier search. Project complete.
 
+## Attribution
+
+For those who care about such things, the majority of the analysis and code in this repo was produced by Claude Opus 4.6 (Anthropic), with David Fitzgerald guiding Claude, providing insights, direction and critical review throughout the process.
+
 ## Timeline
 
 Feb 26 – Mar 9, 2026 (~12 days)
