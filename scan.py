@@ -83,7 +83,7 @@ MET_BASE = "https://collectionapi.metmuseum.org/public/collection/v1"
 
 # Wikidata
 WD_SPARQL_URL = "https://query.wikidata.org/sparql"
-WD_UA = "AuthScanner/1.0 (art authentication research; contact: github.com/david-fitzgerald)"
+WD_UA = "AuthScanner/1.0 (art authentication research; contact: github.com/holarchic)"
 WD_REMBRANDT = "Q5598"
 WD_CONTROL_ARTISTS = {
     "Ferdinand Bol": ("Q374039", "rembrandt_pupil"),

@@ -92,4 +92,4 @@ Recommendation: **Do #1 first.** The Rijksmuseum bottleneck is data, not method.
 
 ## Repo
 
-`david-fitzgerald/authentication-scanner` (private). Notebook: `prototype.ipynb`.
+`holarchic/authentication-scanner` (private). Notebook: `prototype.ipynb`.
